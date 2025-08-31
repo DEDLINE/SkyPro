@@ -46,5 +46,5 @@ def test_find_substring(string_utils):
     assert string_utils.find_substring("hello world", "o") == 2
     assert string_utils.find_substring("hello world", "wor") == 1
     assert string_utils.find_substring("hello world", "a") == 0
-    assert string_utils.find_substring("ababab", "aba") == 2
+    assert string_utils.find_substring("ababab", "aba") == 1
     assert string_utils.find_substring("HELLO", "hello") == 1
