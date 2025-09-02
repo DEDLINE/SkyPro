@@ -7,3 +7,4 @@ with webdriver.Firefox() as driver:
     input_field.send_keys("Sky")
     input_field.clear()
     input_field.send_keys("Pro")
+    driver.quit()
