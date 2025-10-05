@@ -5,7 +5,7 @@ class YougileAPI:
 
     BASE_URL = "https://yougile.com/api-v2"
 
-    API_TOKEN = "f9182c7f-67f7-4853-90a9-276304d0e62c"
+    API_TOKEN = "lj1ylQCdTN7kVpp6TC4Spg9ERPHU+BV1S7x7f1rOKTr-0TXeSslN0NTBcxkzt6k+"
 
     def __init__(self):
         self.headers = {

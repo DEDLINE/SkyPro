@@ -15,9 +15,13 @@ def setup_project(api_client):
     initial_title = f"Test Project {timestamp}"
 
     response = api_client.create_project(title=initial_title)
-    assert response.status_code == 200, ("Ошибка при создании "
+
+    assert response.status_code == 201, ("Ошибка при создании "
                                          "проекта в Setup.")
+
     project_id = response.json().get("id")
+
+    assert project_id is not None, "В ответе POST не найден ID проекта."
 
     yield project_id
 
@@ -31,11 +35,15 @@ def test_create_project_positive(api_client):
 
     response = api_client.create_project(title=test_title)
 
-    assert response.status_code == 200
-    assert response.json().get("title") == test_title
-    assert "id" in response.json()
+    assert response.status_code == 201
 
     project_id = response.json().get("id")
+    assert project_id is not None
+
+    get_response = api_client.get_project(project_id)
+    assert get_response.status_code == 200
+    assert get_response.json().get("title") == test_title
+
     api_client.delete_project(project_id)
 
 
@@ -71,11 +79,13 @@ def test_update_project_positive(api_client, setup_project):
     project_id = setup_project
     new_title = "Updated Project Title " + datetime.now().strftime("%H%M")
 
+    # Шаг 1: Выполняем обновление (PUT)
     response = api_client.update_project(project_id, new_title)
-
+    
     assert response.status_code == 200
-    assert response.json().get("id") == project_id
-    assert response.json().get("title") == new_title
+    get_response = api_client.get_project(project_id)
+    assert get_response.status_code == 200
+    assert get_response.json().get("title") == new_title
 
 
 def test_update_project_negative_invalid_id(api_client):
